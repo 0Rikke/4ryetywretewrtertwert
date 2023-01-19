@@ -1,33 +1,21 @@
-//adicionando libs
 const express = require(`express`);
 const bodyParser = require("body-parser");
 const Sequelize = require(`sequelize`);
 const Users = require(`./Models/User`);
+const cors = require('cors')
 
-
+const msg =[];
 
 const app = express();
-/*
-   Cors Unblocking
-*/
-app.use((req, res, next) => {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    // Request methods you wish to allow
-    //res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+app.use(cors());
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-
-    next();
-})
 /* 
    config body parser
 */
@@ -37,6 +25,23 @@ app.use(bodyParser.json())
 /*
   routes
 */
+
+// logar user
+app.post(`/api/logUser`, (req, res) => {
+
+    res.contentType(`json`);
+    (async () => {
+        const getUser = await Users.findAll({where:{
+            name: req.body.name,
+            password:req.body.password
+        }})
+        
+
+        res.status(200).json(getUser.length === 1 ? {msg:'usuário valido'} : {msg:`usuário invalido`})
+
+    })();
+    
+});
 //buscar usuário específico                                                 
 app.get(`/api/GetUsers`, (req, res) => {
     res.contentType(`json`);
@@ -56,15 +61,11 @@ app.post(`/api/CreateUsers`, (req, res,) => {
         name: req.body.name,
         password: req.body.password
     }).then(() => {
-        res.status(200).json({msg:"Usuário criado com sucesso!"})
-        //retornar um json com a menssagem de sucesso
-        //res.redirect possibilita redirecionar a aotra rota caso necessário
-        //res.algumacoisa
-
+        res.status(200).json({ msg: "Usuário criado com sucesso!" })
+  
     }).catch((err) => {
         console.log(`falha ao cria um usuário: ` + err);
-        //retornar um json com a menssgem de erro
-        //res.algumacoisa
+        
     })
 })
 //alterar usuário
