@@ -71,6 +71,6 @@ app.post(`/api/CreateUsers`, (req, res,) => {
 //alterar usuário
 //deletar usuário
 
-app.listen(8081, () => {
+app.listen(8082, () => {
     console.log(`server rodando!`);
 });
