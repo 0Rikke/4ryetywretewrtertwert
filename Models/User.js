@@ -6,7 +6,10 @@ const users = db.sequelize.define(`users`, {
     name: {
         type: db.Sequelize.STRING
     },
-    password: {
+    hash:{
+        type: db.Sequelize.STRING
+    },
+    salt: {
         type: db.Sequelize.STRING
     }
 });
