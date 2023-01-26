@@ -61,7 +61,7 @@ app.post(`/api/logUser`, (req, res) => {
 
         var validUser = login(req.body.password,hash,salt);
         }
-        res.status(200).json(validUser ? {msg:'usuário valido',token:'132hjk1234lhj'} : {msg:`usuário invalido`})
+        res.status(200).json(validUser ? {msg:'usuário valido',token:'132hjk1234lhj'} : {msg:`usuário invalido`,token:''})
 
     })();
     

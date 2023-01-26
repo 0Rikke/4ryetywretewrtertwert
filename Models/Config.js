@@ -1,7 +1,7 @@
 const Sequelize = require(`sequelize`);
 
 // Instanciando a conneção com o banco de dados 
-const sequelize = new Sequelize(`nodeJs`, `root`, `Chicletinho!23`, {
+const sequelize = new Sequelize(`nodeJs`, `root`, `password`, {
     host: `localhost`,
     dialect: `mysql`
 });
